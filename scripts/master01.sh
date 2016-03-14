@@ -21,6 +21,8 @@ apt-get purge openjdk* -y
 apt-get install oracle-java8-set-default
 apt-get install wget curl unzip -y
 
+su - vagrant
+
 export NODE=tajo-0.11.1
 export PROJ_DIR=/home/vagrant
 export SERVERS=/vagrant/servers
@@ -36,6 +38,9 @@ export TAJO_LOG_DIR=${TAJO_HOME}/logs
 echo '' >> $PROJ_DIR/.bashrc
 echo 'export SERVERS=/vagrant/servers' >> $PROJ_DIR/.bashrc
 echo 'export JAVA_HOME='$JAVA_HOME >> $PROJ_DIR/.bashrc
+echo 'export NODE='$NODE >> $PROJ_DIR/.bashrc
+echo 'export PROJ_DIR='$PROJ_DIR >> $PROJ_DIR/.bashrc
+echo 'export SERVERS='$SERVERS >> $PROJ_DIR/.bashrc
 echo 'export HADOOP_HOME='$HADOOP_HOME >> $PROJ_DIR/.bashrc
 echo 'export TAJO_HOME='$TAJO_HOME >> $PROJ_DIR/.bashrc
 echo 'export TAJO_MASTER_HEAPSIZE='$TAJO_MASTER_HEAPSIZE >> $PROJ_DIR/.bashrc
@@ -46,9 +51,9 @@ echo 'export HADOOP_PREFIX=/vagrant/servers/hadoop-2.7.2' >> $PROJ_DIR/.bashrc
 echo 'export PATH=$PATH:.:$SERVERS/apache-storm-0.10.0/bin:$HADOOP_PREFIX/bin:$HADOOP_PREFIX/sbin' >> $PROJ_DIR/.bashrc
 
 # ssh setting
-mkdir ~/.ssh
-ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
-cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+mkdir -p $PROJ_DIR/.ssh
+ssh-keygen -t dsa -P '' -f $PROJ_DIR/.ssh/id_dsa
+cat $PROJ_DIR/.ssh/id_dsa.pub >> $PROJ_DIR/.ssh/authorized_keys
 echo '' >> /etc/ssh/ssh_config
 echo '    ForwardX11 no' >> /etc/ssh/ssh_config
 echo '    StrictHostKeyChecking no' >> /etc/ssh/ssh_config
@@ -66,8 +71,8 @@ if [ ! -f "hadoop-2.7.2.tar.gz" ]; then
 	wget http://apache.arvixe.com/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz 
 fi
 tar xvf hadoop-2.7.2.tar.gz
-mv hadoop-2.7.2 ..
-sed -ie "s/${JAVA_HOME}/"${JAVA_HOME}"/g" $SERVERS/hadoop-2.7.2/etc/hadoop/hadoop-env.sh
+rm -Rf $SERVERS/hadoop-2.7.2
+mv hadoop-2.7.2 $SERVERS
 cp -Rf $SERVERS/configs/hadoop/etc/hadoop/*.* $SERVERS/hadoop-2.7.2/etc/hadoop
 
 # tajo download
@@ -75,9 +80,9 @@ if [ ! -f "tajo-0.11.1.tar.gz" ]; then
 	wget http://apache.mirror.cdnetworks.com/tajo/tajo-0.11.1/tajo-0.11.1.tar.gz
 fi
 tar xvf tajo-0.11.1.tar.gz
-mv ${NODE} ..
-rm -Rf $SERVERS/tmp/${NODE}/tajo-0.11.1
-cd ../${NODE}
+rm -Rf $SERVERS/${NODE}
+mv $SERVERS/tmp/${NODE}/${NODE} $SERVERS
+cd $SERVERS/${NODE}
 
 cp -Rf $SERVERS/configs/tajo/conf/*.* $SERVERS/${NODE}/conf 
 sed -ie 's/${NODE}/'${NODE}'/g' $SERVERS/${NODE}/conf/tajo-env.sh
@@ -85,7 +90,7 @@ sed -ie 's/${NODE}/'${NODE}'/g' $SERVERS/${NODE}/conf/tajo-env.sh
 chown -Rf vagrant:vagrant $SERVERS
 
 ln -s $SERVERS/hadoop-2.7.2 $PROJ_DIR/hadoop-2.7.2
-cd /vagrant/servers/hadoop-2.7.2/sbin/
+cd $SERVERS/hadoop-2.7.2/sbin/
 ./start-yarn.sh
 # ./stop-yarn.sh
 
@@ -94,6 +99,7 @@ cd /vagrant/servers/hadoop-2.7.2/sbin/
 
 cd $TAJO_HOME/bin
 ./start-tajo.sh
+# ./stop-tajo.sh
 
 # http://192.168.82.170:26002
 # http://192.168.82.170:26080
