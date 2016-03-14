@@ -1,3 +1,6 @@
 # DO NOT EDIT - AUTO GENERATED FROM setup.conf
 
 cfg_ip_master01="192.168.82.170"
+cfg_ip_slave01="192.168.82.171"
+cfg_ip_slave02="192.168.82.172"
+cfg_ip_slave03="192.168.82.173"

@@ -21,8 +21,6 @@ apt-get purge openjdk* -y
 apt-get install oracle-java8-set-default
 apt-get install wget curl unzip -y
 
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-
 export NODE=slave02
 export PROJ_DIR=/home/vagrant
 export SERVERS=/vagrant/servers
@@ -70,6 +68,7 @@ fi
 tar xvf hadoop-2.7.2.tar.gz
 mv hadoop-2.7.2 ..
 sed -ie "s/${JAVA_HOME}/"${JAVA_HOME}"/g" $SERVERS/hadoop-2.7.2/etc/hadoop/hadoop-env.sh
+cp -Rf $SERVERS/configs/hadoop/etc/hadoop/*.* $SERVERS/hadoop-2.7.2/etc/hadoop
 
 # tajo download
 if [ ! -f "tajo-0.11.1.tar.gz" ]; then
@@ -78,17 +77,26 @@ fi
 tar xvf tajo-0.11.1.tar.gz
 mv tajo-0.11.1 ${NODE}
 mv ${NODE} ..
+rm -Rf $SERVERS/tmp/${NODE}/tajo-0.11.1
 cd ../${NODE}
 
-cp -Rf $SERVERS/configs/tajo/conf/tajo-site.xml $SERVERS/${NODE}/conf 
-cp -Rf $SERVERS/configs/tajo/conf/workers $SERVERS/${NODE}/conf 
-cp -Rf $SERVERS/configs/tajo/conf/tajo-env.sh $SERVERS/${NODE}/conf 
+cp -Rf $SERVERS/configs/tajo/conf/*.* $SERVERS/${NODE}/conf 
 sed -ie 's/${NODE}/'${NODE}'/g' $SERVERS/${NODE}/conf/tajo-env.sh
 
 chown -Rf vagrant:vagrant $SERVERS
-rm -Rf $SERVERS/tmp/${NODE}
+
+ln -s $SERVERS/hadoop-2.7.2 $PROJ_DIR/hadoop-2.7.2
+cd /vagrant/servers/hadoop-2.7.2/sbin/
+./start-yarn.sh
+# ./stop-yarn.sh
+
+# http://192.168.82.171:8042/node
+# http://192.168.82.171:8088/cluster
 
 cd $TAJO_HOME/bin
 ./start-tajo.sh
+
+# http://192.168.82.171:26002
+# http://192.168.82.171:26080
 
 exit 0

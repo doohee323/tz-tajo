@@ -75,17 +75,14 @@ if [ ! -f "tajo-0.11.1.tar.gz" ]; then
 	wget http://apache.mirror.cdnetworks.com/tajo/tajo-0.11.1/tajo-0.11.1.tar.gz
 fi
 tar xvf tajo-0.11.1.tar.gz
-mv tajo-0.11.1 ${NODE}
 mv ${NODE} ..
+rm -Rf $SERVERS/tmp/${NODE}/tajo-0.11.1
 cd ../${NODE}
 
-cp -Rf $SERVERS/configs/tajo/conf/tajo-site.xml $SERVERS/${NODE}/conf 
-cp -Rf $SERVERS/configs/tajo/conf/workers $SERVERS/${NODE}/conf 
-cp -Rf $SERVERS/configs/tajo/conf/tajo-env.sh $SERVERS/${NODE}/conf 
+cp -Rf $SERVERS/configs/tajo/conf/*.* $SERVERS/${NODE}/conf 
 sed -ie 's/${NODE}/'${NODE}'/g' $SERVERS/${NODE}/conf/tajo-env.sh
 
 chown -Rf vagrant:vagrant $SERVERS
-rm -Rf $SERVERS/tmp/${NODE}
 
 ln -s $SERVERS/hadoop-2.7.2 $PROJ_DIR/hadoop-2.7.2
 cd /vagrant/servers/hadoop-2.7.2/sbin/
