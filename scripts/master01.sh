@@ -21,12 +21,13 @@ apt-get purge openjdk* -y
 apt-get install oracle-java8-set-default
 apt-get install wget curl unzip -y
 
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-
+export NODE=tajo-0.11.1
 export PROJ_DIR=/home/vagrant
 export SERVERS=/vagrant/servers
+#export SERVERS=/Users/dhong/Documents/workspace/etc/tz-tajo/servers
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 export HADOOP_HOME=/home/vagrant/hadoop-2.7.2
-export TAJO_HOME=/vagrant/servers/tajo-0.11.1
+export TAJO_HOME=/vagrant/servers/${NODE}
 export TAJO_MASTER_HEAPSIZE=1000
 export TAJO_WORKER_HEAPSIZE=5000
 export TAJO_PID_DIR=${TAJO_HOME}/pids
@@ -34,7 +35,6 @@ export TAJO_LOG_DIR=${TAJO_HOME}/logs
 
 echo '' >> $PROJ_DIR/.bashrc
 echo 'export SERVERS=/vagrant/servers' >> $PROJ_DIR/.bashrc
-echo 'export PATH=$PATH:.:$SERVERS/apache-storm-0.10.0/bin' >> $PROJ_DIR/.bashrc
 echo 'export JAVA_HOME='$JAVA_HOME >> $PROJ_DIR/.bashrc
 echo 'export HADOOP_HOME='$HADOOP_HOME >> $PROJ_DIR/.bashrc
 echo 'export TAJO_HOME='$TAJO_HOME >> $PROJ_DIR/.bashrc
@@ -43,13 +43,7 @@ echo 'export TAJO_WORKER_HEAPSIZE='$TAJO_WORKER_HEAPSIZE >> $PROJ_DIR/.bashrc
 echo 'export TAJO_PID_DIR='$TAJO_PID_DIR >> $PROJ_DIR/.bashrc
 echo 'export TAJO_LOG_DIR='$TAJO_LOG_DIR >> $PROJ_DIR/.bashrc
 echo 'export HADOOP_PREFIX=/home/vagrant/hadoop-2.7.2' >> $PROJ_DIR/.bashrc
-
-ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
-cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
-echo '' >> /etc/ssh/ssh_config
-echo '    ForwardX11 no' >> /etc/ssh/ssh_config
-echo '    StrictHostKeyChecking no' >> /etc/ssh/ssh_config
-sudo service ssh restart
+echo 'export PATH=$PATH:.:$SERVERS/apache-storm-0.10.0/bin:$HADOOP_PREFIX/bin:$HADOOP_PREFIX/sbin' >> $PROJ_DIR/.bashrc
 
 cd /vagrant/scripts
 ./tz-tajo_install.sh
@@ -57,8 +51,3 @@ cd /vagrant/scripts
 chown -Rf vagrant:vagrant $SERVERS
 
 exit 0
-
-cd /vagrant/scripts
-su vagrant
-./tz-tajo_run.sh
-

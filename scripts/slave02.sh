@@ -52,8 +52,6 @@ echo '    ForwardX11 no' >> /etc/ssh/ssh_config
 echo '    StrictHostKeyChecking no' >> /etc/ssh/ssh_config
 sudo service ssh restart
 
-chown -Rf vagrant:vagrant $SERVERS
-
 mkdir -p $SERVERS/tmp_${NODE}
 cd $SERVERS/tmp_${NODE}
 wget http://apache.mirror.cdnetworks.com/tajo/tajo-0.11.1/tajo-0.11.1.tar.gz
@@ -64,4 +62,8 @@ cd ../${NODE}
 
 cp -Rf $SERVERS/configs/tajo/conf/tajo-site.xml $SERVERS/${NODE}/conf 
 cp -Rf $SERVERS/configs/tajo/conf/workers $SERVERS/${NODE}/conf 
+sed -ie "s/${TAJO_HOME}/"${TAJO_HOME}"/g" $SERVERS/${NODE}/conf/tajo-env.sh
 
+chown -Rf vagrant:vagrant $SERVERS
+
+exit 0

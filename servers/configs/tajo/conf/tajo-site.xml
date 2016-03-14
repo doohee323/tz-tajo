@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+
+<property>
+  <name>tajo.rootdir</name>
+  <value>hdfs://master01:9010/tajo</value>
+</property>
+
+<property>
+  <name>tajo.master.umbilical-rpc.address</name>
+  <value>master01:26001</value>
+</property>
+
+
+<property>
+  <name>tajo.master.client-rpc.address</name>
+  <value>master01:26002</value>
+</property>
+
+<property>
+  <name>tajo.resource-tracker.rpc.address</name>
+  <value>master01:26003</value>
+</property>
+
+<property>
+  <name>tajo.catalog.client-rpc.address</name>
+  <value>master01:26005</value>
+</property>
+
+<property>
+  <name>tajo.worker.resource.dfs-dir-aware</name>
+  <value>true</value>
+</property>
+
+</configuration> 

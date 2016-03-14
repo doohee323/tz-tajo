@@ -21,11 +21,11 @@ apt-get purge openjdk* -y
 apt-get install oracle-java8-set-default
 apt-get install wget curl unzip -y
 
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-
 export NODE=slave01
 export PROJ_DIR=/home/vagrant
 export SERVERS=/vagrant/servers
+#export SERVERS=/Users/dhong/Documents/workspace/etc/tz-tajo/servers
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 export HADOOP_HOME=/home/vagrant/hadoop-2.7.2
 export TAJO_HOME=/vagrant/servers/${NODE}
 export TAJO_MASTER_HEAPSIZE=1000
@@ -52,8 +52,6 @@ echo '    ForwardX11 no' >> /etc/ssh/ssh_config
 echo '    StrictHostKeyChecking no' >> /etc/ssh/ssh_config
 sudo service ssh restart
 
-chown -Rf vagrant:vagrant $SERVERS
-
 mkdir -p $SERVERS/tmp_${NODE}
 cd $SERVERS/tmp_${NODE}
 wget http://apache.mirror.cdnetworks.com/tajo/tajo-0.11.1/tajo-0.11.1.tar.gz
@@ -64,3 +62,8 @@ cd ../${NODE}
 
 cp -Rf $SERVERS/configs/tajo/conf/tajo-site.xml $SERVERS/${NODE}/conf 
 cp -Rf $SERVERS/configs/tajo/conf/workers $SERVERS/${NODE}/conf 
+sed -ie "s/${TAJO_HOME}/"${TAJO_HOME}"/g" $SERVERS/${NODE}/conf/tajo-env.sh
+
+chown -Rf vagrant:vagrant $SERVERS
+
+exit 0

@@ -83,5 +83,4 @@ user_id,  movie_id,  title,  rating,  rated_at
 1,  2355,  Bug's Life, A (1998),  5,  2001-01-07 08:38:11
 (5 rows, 1.519 sec, 446 B selected)
 
-
 exit 0
