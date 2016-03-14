@@ -19,6 +19,6 @@
 <configuration>
      <property>
      <name>fs.defaultFS</name>
-     <value>hdfs://korea80:9010</value>
+     <value>hdfs://192.168.82.170:9010</value>
      </property>
 </configuration>

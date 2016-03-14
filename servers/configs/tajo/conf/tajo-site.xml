@@ -4,28 +4,27 @@
 
 <property>
   <name>tajo.rootdir</name>
-  <value>hdfs://master01:9010/tajo</value>
+  <value>hdfs://192.168.82.170:9010/tajo</value>
 </property>
 
 <property>
   <name>tajo.master.umbilical-rpc.address</name>
-  <value>master01:26001</value>
+  <value>192.168.82.170:26001</value>
 </property>
-
 
 <property>
   <name>tajo.master.client-rpc.address</name>
-  <value>master01:26002</value>
+  <value>192.168.82.170:26002</value>
 </property>
 
 <property>
   <name>tajo.resource-tracker.rpc.address</name>
-  <value>master01:26003</value>
+  <value>192.168.82.170:26003</value>
 </property>
 
 <property>
   <name>tajo.catalog.client-rpc.address</name>
-  <value>master01:26005</value>
+  <value>192.168.82.170:26005</value>
 </property>
 
 <property>

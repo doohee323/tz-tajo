@@ -42,13 +42,13 @@ movie_lens> CREATE EXTERNAL TABLE ratings (
  movie_id INT ,
  rating INT ,
  rated_at INT
-) USING TEXT WITH ('text.delimiter'='::') LOCATION 'hdfs://master01:9010/movielens/ratings/';
+) USING TEXT WITH ('text.delimiter'='::') LOCATION 'hdfs://192.168.82.170:9010/movielens/ratings/';
 
 movie_lens> CREATE EXTERNAL TABLE movies (
   movie_id INT,
   title TEXT,
   genres TEXT
-) USING TEXT WITH ('text.delimiter'='::') LOCATION 'hdfs://master01:9010/movielens/movies/';
+) USING TEXT WITH ('text.delimiter'='::') LOCATION 'hdfs://192.168.82.170:9010/movielens/movies/';
 
 # query sample data
 movie_lens> select * from movies limit 5;

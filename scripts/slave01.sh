@@ -58,8 +58,8 @@ sudo service ssh restart
 #scp ~/.ssh/authorized_keys slave01:~/.ssh/.
 #ssh vagrant@slave01 "chmod 755 ~/.ssh; chmod 644 ~/.ssh/authorized_keys"
 
-mkdir -p $SERVERS/tmp_${NODE}
-cd $SERVERS/tmp_${NODE}
+mkdir -p $SERVERS/tmp/${NODE}
+cd $SERVERS/tmp/${NODE}
 
 # hadoop download
 if [ ! -f "hadoop-2.7.2.tar.gz" ]; then
@@ -84,6 +84,9 @@ cp -Rf $SERVERS/configs/tajo/conf/tajo-env.sh $SERVERS/${NODE}/conf
 sed -ie 's/${NODE}/'${NODE}'/g' $SERVERS/${NODE}/conf/tajo-env.sh
 
 chown -Rf vagrant:vagrant $SERVERS
-rm -Rf $SERVERS/tmp_${NODE}
+rm -Rf $SERVERS/tmp/${NODE}
+
+cd $TAJO_HOME/bin
+./start-tajo.sh
 
 exit 0
