@@ -22,7 +22,7 @@
 # remote nodes.
 
 # Hadoop home. Required
-export HADOOP_HOME=${TAJO_HOME}
+export HADOOP_HOME=/vagrant/servers/hadoop-2.7.2
 
 # The java implementation to use.  Required.
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle
@@ -58,10 +58,10 @@ export TAJO_WORKER_OPTS='-XX:+UseParallelOldGC'
 # export TAJO_QUERYMASTER_OPTS=
 
 # Where log files are stored.  $TAJO_HOME/logs by default.
-export TAJO_LOG_DIR=${TAJO_HOME}/logs
+export TAJO_LOG_DIR=/vagrant/servers/${NODE}/logs
 
 # The directory where pid files are stored. /tmp by default.
-export TAJO_PID_DIR=${TAJO_HOME}/pids
+export TAJO_PID_DIR=/vagrant/servers/${NODE}/pids
 
 # A string representing this instance of tajo. $USER by default.
 # export TAJO_IDENT_STRING=$USER
