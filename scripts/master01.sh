@@ -73,7 +73,7 @@ fi
 tar xvf hadoop-2.7.2.tar.gz
 rm -Rf $SERVERS/hadoop-2.7.2
 mv hadoop-2.7.2 $SERVERS
-cp -Rf $SERVERS/configs/hadoop/etc/hadoop/*.* $SERVERS/hadoop-2.7.2/etc/hadoop
+cp -Rf $SERVERS/configs/hadoop/etc/hadoop/* $SERVERS/hadoop-2.7.2/etc/hadoop
 
 # tajo download
 if [ ! -f "tajo-0.11.1.tar.gz" ]; then
@@ -84,7 +84,7 @@ rm -Rf $SERVERS/${NODE}
 mv $SERVERS/tmp/${NODE}/${NODE} $SERVERS
 cd $SERVERS/${NODE}
 
-cp -Rf $SERVERS/configs/tajo/conf/*.* $SERVERS/${NODE}/conf 
+cp -Rf $SERVERS/configs/tajo/conf/* $SERVERS/${NODE}/conf 
 sed -ie 's/${NODE}/'${NODE}'/g' $SERVERS/${NODE}/conf/tajo-env.sh
 
 chown -Rf vagrant:vagrant $SERVERS
