@@ -88,18 +88,5 @@ sed -ie 's/${NODE}/'${NODE}'/g' $SERVERS/${NODE}/conf/tajo-env.sh
 chown -Rf vagrant:vagrant $SERVERS
 
 ln -s $SERVERS/hadoop-2.7.2 $PROJ_DIR/hadoop-2.7.2
-cd $SERVERS/hadoop-2.7.2/sbin/
-./start-yarn.sh
-# ./stop-yarn.sh
-
-# http://192.168.82.171:8042/node
-# http://192.168.82.171:8088/cluster
-
-cd $TAJO_HOME/bin
-./start-tajo.sh
-# ./stop-tajo.sh
-
-# http://192.168.82.171:26002
-# http://192.168.82.171:26080
 
 exit 0

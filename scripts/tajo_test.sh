@@ -10,6 +10,32 @@ export TAJO_WORKER_HEAPSIZE=5000
 export TAJO_PID_DIR=${TAJO_HOME}/pids
 export TAJO_LOG_DIR=${TAJO_HOME}/logs
 
+ssh vagrant@slave01 "mkdir -p ~/.ssh"
+scp ~/.ssh/authorized_keys slave01:~/.ssh/.
+ssh vagrant@slave01 "chmod 755 ~/.ssh; chmod 644 ~/.ssh/authorized_keys"
+ssh vagrant@slave02 "mkdir -p ~/.ssh"
+scp ~/.ssh/authorized_keys slave02:~/.ssh/.
+ssh vagrant@slave02 "chmod 755 ~/.ssh; chmod 644 ~/.ssh/authorized_keys"
+ssh vagrant@slave03 "mkdir -p ~/.ssh"
+scp ~/.ssh/authorized_keys slave03:~/.ssh/.
+ssh vagrant@slave03 "chmod 755 ~/.ssh; chmod 644 ~/.ssh/authorized_keys"
+
+ln -s $SERVERS/hadoop-2.7.2 $PROJ_DIR/hadoop-2.7.2
+cd $SERVERS/hadoop-2.7.2/sbin/
+./start-yarn.sh
+# ./stop-yarn.sh
+
+# http://192.168.82.170:8042/node
+# http://192.168.82.170:8088/cluster
+
+cd $TAJO_HOME/bin
+./start-tajo.sh
+# ./stop-tajo.sh
+
+# http://192.168.82.170:26002
+# http://192.168.82.170:26080
+
+
 wget http://files.grouplens.org/datasets/movielens/ml-1m.zip
 unzip ml-1m.zip
 
